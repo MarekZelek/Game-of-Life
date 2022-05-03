@@ -1,0 +1,28 @@
+.main-board {
+    display: flex;
+    position: relative;
+
+}
+
+.dead {
+    border: solid 1px #7c7c7c;
+    cursor: pointer;
+
+}
+
+.row {
+    width: 30px;
+    height: 30px;
+}
+
+.control-panel {
+    display: flex;
+    border: solid 1px #ff5555;
+    padding: 10px;
+}
+
+.alive {
+    background: #000;
+    border: solid 1px #7c7c7c;
+    cursor: pointer;
+}

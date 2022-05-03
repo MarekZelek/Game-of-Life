@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game-of-Life</title>
+    <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+<div class="control-panel">
+    <div><p>Enter Board size: </p></div>
+    <input type='text' placeholder="nr of rows">
+    <input type='text' placeholder="nr of columns">
+    <button class='start-stop-button' id='start-stop-button' type='button'>Start</button>
+    <div><p>Select game speed: </p></div>
+    <select class='select-speed' id="select-speed">
+        <option value='option1'>option1</option>
+        <option value='option2'>option2</option>
+        <option value='option3'>option2</option>
+        <option value='option4'>option2</option>
+        <option value='option5'>option2</option>
+    </select>
+    <button class='start-button' id='clear-button' type='button'><p>Clear</p></button>
+</div>
+
+<div class="main-board" id="board"></div>
+
+<script src="./scripts/index.js"></script>
+</body>
+</html>
