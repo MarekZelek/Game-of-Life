@@ -49,28 +49,27 @@ async function setSpeed(speed) {
 
 
 //-------Buttons-------------
-//TODO: fix start stop game
-//-------start stop game button-------------
-let play = false;
-const startStopButton = document.querySelector('#start-stop-button');
 
-startStopButton.addEventListener('click', () => {
-    const initialText = 'Start';
-    if (startStopButton.textContent.toLowerCase().includes(initialText.toLowerCase())) {
-      for(let i=0; i < 1000; i++) {
-          setTimeout(() => { startGame(); }, 300);
-          // console.log(i)
-      }
+//-------start stop game button-------------
+
+const startStopButton = document.querySelector('#start-stop-button');
+let runningGame = null;
+const initialText = 'Start';
+
+startStopButton.addEventListener('click',  ()=> {
+    if(runningGame === null){
+        runningGame = setInterval(startGame, 300);
         startStopButton.textContent = 'Stop';
     } else {
         startStopButton.textContent = initialText;
+        clearInterval(runningGame);
+        runningGame=null;;
     }
-
 })
 
 
-function startGame() {
-    gameLogic();
+async function startGame() {
+    await gameLogic();
 }
 
 function stopGame() {
@@ -156,14 +155,13 @@ async function gameLogic() {
                     newBoard[i][j] = 1;
                 }
             }
-            //add here updateBoard?
         }
     }
 
 
-    updateBoard();
-    updateGameBoard();
-    await timeout(300);
+    await updateBoard();
+    await updateGameBoard();
+     await timeout(300);
 }
 
 async function updateBoard() {
@@ -173,7 +171,6 @@ async function updateBoard() {
             newBoard[i][j] = 0;
         }
     }
-    await timeout(300);
 }
 
 async function updateGameBoard() {
@@ -188,7 +185,6 @@ async function updateGameBoard() {
             }
         }
     }
-    await timeout(300);
 
 }
 
