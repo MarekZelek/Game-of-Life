@@ -1,5 +1,6 @@
-const numberOfRows = 10;
-const numberOfColumns = 20;
+const numberOfRows = 30;
+const numberOfColumns = 60;
+
 //TODO: take parameters from input
 function generateGameBoard(lines, columns) {
     for (let col = 0; col < columns; col++) {
@@ -11,16 +12,19 @@ function generateGameBoard(lines, columns) {
             const createRow = document.createElement("div");
             createRow.className = 'row dead';
             createRow.setAttribute('id', col + '-' + row)
+            createRow.style.setProperty('width', `calc(95vw/${numberOfColumns})`)
+            createRow.style.setProperty('height', `calc(95vh/${numberOfRows})`)
             createCol.appendChild(createRow);
         }
     }
 }
+generateGameBoard(numberOfRows, numberOfColumns);
 
 let board = new Array(numberOfRows).fill(0).map(() => new Array(numberOfColumns).fill(0));
 let newBoard = new Array(numberOfRows).fill(0).map(() => new Array(numberOfColumns).fill(0));
 
-//TODO: Make gameBoard responsive
-generateGameBoard(numberOfRows, numberOfColumns);
+//TODO: Improve gameBoard responsiveness
+
 
 //---------toggling cells on game Board---------------
 const selectCells = document.querySelectorAll(".row");
@@ -37,8 +41,6 @@ selectCells.forEach(element => {
         } else {
             board[row][col] = 0;
         }
-        // console.table(board);
-        // console.log(element)
     });
 });
 
@@ -76,7 +78,7 @@ function stopGame() {
 }
 
 //-------clear board button----------
-//TODO: debug clear button
+
 const clearButton = document.querySelector('#clear-button');
 
 clearButton.addEventListener('click', () => {
@@ -86,7 +88,8 @@ clearButton.addEventListener('click', () => {
 clearBoard = () => {
     selectCells.forEach(element => {
         if (element.classList.contains('alive')) {
-            element.classList.remove('alive')
+            element.classList.add('dead');
+            element.classList.remove('alive');
         }
     });
     for (let i = 0; i < board.length; i++) {
@@ -157,14 +160,12 @@ async function gameLogic() {
             }
         }
     }
-
-
-    await updateBoard();
+    await updateTables();
     await updateGameBoard();
-     await timeout(300);
+    await timeout(300);
 }
 
-async function updateBoard() {
+async function updateTables() {
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
             board[i][j] = newBoard[i][j];
