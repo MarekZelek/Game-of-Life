@@ -12,8 +12,8 @@ function generateGameBoard(lines, columns) {
             const createRow = document.createElement("div");
             createRow.className = 'row dead';
             createRow.setAttribute('id', col + '-' + row)
-            createRow.style.setProperty('width', `calc(95vw/${numberOfColumns})`)
-            createRow.style.setProperty('height', `calc(95vh/${numberOfRows})`)
+            createRow.style.setProperty('width', `calc(95vw/${columns})`)
+            createRow.style.setProperty('height', `calc(95vh/${lines})`)
             createCol.appendChild(createRow);
         }
     }
@@ -44,14 +44,16 @@ selectCells.forEach(element => {
     });
 });
 
-//TODO: take arguments from select and pass to setSpeed function
-async function setSpeed(speed) {
-    await timeout(speed);
+//TODO: fix setSpeed function
+
+const getSpeedFromSelect = document.getElementById("select-speed");
+
+ function setSpeed() {
+     return getSpeedFromSelect.value;
 }
 
 
 //-------Buttons-------------
-
 //-------start stop game button-------------
 
 const startStopButton = document.querySelector('#start-stop-button');
@@ -60,22 +62,16 @@ const initialText = 'Start';
 
 startStopButton.addEventListener('click',  ()=> {
     if(runningGame === null){
-        runningGame = setInterval(startGame, 300);
+        runningGame = setInterval(startGame, setSpeed());
+        getSpeedFromSelect.disabled = true;
         startStopButton.textContent = 'Stop';
     } else {
         startStopButton.textContent = initialText;
+        getSpeedFromSelect.disabled = false;
         clearInterval(runningGame);
         runningGame=null;;
     }
 })
-
-
-async function startGame() {
-    await gameLogic();
-}
-
-function stopGame() {
-}
 
 //-------clear board button----------
 
@@ -98,6 +94,10 @@ clearBoard = () => {
             newBoard[i][j] = 0;
         }
     }
+}
+
+async function startGame() {
+    await gameLogic();
 }
 
 //----------game logic----------------
@@ -160,9 +160,10 @@ async function gameLogic() {
             }
         }
     }
+    setSpeed();
     await updateTables();
     await updateGameBoard();
-    await timeout(300);
+    await timeout(setSpeed());
 }
 
 async function updateTables() {
